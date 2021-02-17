@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <TextView
+            android:id="@+id/txt_fullname2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choirul Huda" />
+
+        <TextView
+            android:id="@+id/txt_id2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ID 5" />
+
+        <TextView
+            android:id="@+id/txt_user_email2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="huda@gmail.com" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

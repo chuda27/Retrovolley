@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Retrovolley</string>
+    <string name="base_url">Base URL</string>
+    <string name="refresh">Refresh</string>
 </resources>
