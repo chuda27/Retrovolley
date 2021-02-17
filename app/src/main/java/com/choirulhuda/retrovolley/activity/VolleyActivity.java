@@ -1,8 +1,10 @@
-package com.choirulhuda.retrovolley;
+package com.choirulhuda.retrovolley.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.choirulhuda.retrovolley.R;
 
 public class VolleyActivity extends AppCompatActivity {
 

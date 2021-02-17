@@ -1,4 +1,4 @@
-package com.choirulhuda.retrovolley;
+package com.choirulhuda.retrovolley.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -8,6 +8,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.choirulhuda.retrovolley.R;
+import com.choirulhuda.retrovolley.UserResponse;
 import com.choirulhuda.retrovolley.adapter.UserAdapter;
 import com.choirulhuda.retrovolley.model.User;
 import com.choirulhuda.retrovolley.retrofit.ApiService;
@@ -61,6 +64,10 @@ public class RetrofitActivity extends AppCompatActivity {
             case R.id.action_refresh:
                 getUserFromAPI();
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_add:
+
+                //startActivity(new Intent(this, ));
                 break;
         }
         return super.onOptionsItemSelected(item);
