@@ -3,4 +3,7 @@
     <string name="base_url">Base URL</string>
     <string name="refresh">Refresh</string>
     <string name="add">Add</string>
+    <string name="retrofit">Retrofit</string>
+    <string name="tambah_user">Tambah User</string>
+    <string name="tidak_boleh_kosong">Tidak boleh kosong</string>
 </resources>

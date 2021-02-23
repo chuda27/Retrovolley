@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.choirulhuda.retrovolley.activity.RetrofitActivity;
-import com.choirulhuda.retrovolley.retrofit.ApiService;
+import com.choirulhuda.retrovolley.activity.VolleyActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_url:
                 View urlView = getLayoutInflater().inflate(R.layout.prompt_url, null);
                 EditText edtBaseURL = urlView.findViewById(R.id.edt_base_url);
-                String globalURL = pref.getString(ApiService.BASE_URL, null);
+                String globalURL = pref.getString(GlobalVariable.BASE_URL, null);
 
                 if (globalURL != null) {
                     edtBaseURL.setText(globalURL);
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String globalURL = edtBaseURL.getText().toString();
                                 SharedPreferences.Editor prefEditor = pref.edit();
-                                prefEditor.putString(ApiService.BASE_URL, globalURL);
+                                prefEditor.putString(GlobalVariable.BASE_URL, globalURL);
                                 prefEditor.apply();
                             }
                         }). setNegativeButton("Batal", new DialogInterface.OnClickListener() {
@@ -72,5 +72,10 @@ public class MainActivity extends AppCompatActivity {
     public void actionRetrofit(View view) {
         Intent retrofit = new Intent(this, RetrofitActivity.class);
         startActivity(retrofit);
+    }
+
+    public void actionVolley(View view) {
+        Intent volley = new Intent(this, VolleyActivity.class);
+        startActivity(volley);
     }
 }

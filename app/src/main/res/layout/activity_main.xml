@@ -39,5 +39,6 @@
         app:layout_constraintHorizontal_bias="0.406"
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/img_retrofit"
-        app:srcCompat="@drawable/ic_volley" />
+        app:srcCompat="@drawable/ic_volley"
+        android:onClick="actionVolley"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

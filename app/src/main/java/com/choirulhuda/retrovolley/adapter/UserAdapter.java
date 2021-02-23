@@ -26,7 +26,8 @@ public class UserAdapter extends ArrayAdapter<User> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         User user = getItem(position);
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user, parent, false);
+            convertView = LayoutInflater.from(getContext()).
+                    inflate(R.layout.item_user, parent, false);
         }
 
         TextView txtFullname = convertView.findViewById(R.id.txt_user_fullname);

@@ -1,33 +1,35 @@
 package com.choirulhuda.retrovolley.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.choirulhuda.retrovolley.GlobalVariable;
 import com.choirulhuda.retrovolley.R;
+import com.choirulhuda.retrovolley.Request;
 import com.choirulhuda.retrovolley.UserResponse;
 import com.choirulhuda.retrovolley.adapter.UserAdapter;
 import com.choirulhuda.retrovolley.model.User;
-import com.choirulhuda.retrovolley.retrofit.ApiService;
+import com.choirulhuda.retrovolley.retrofit.MethodHTTP;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +39,17 @@ public class RetrofitActivity extends AppCompatActivity {
     private final String TAG = getClass().getSimpleName();
     private ListView lvUser;
     private List<User> listUser = new ArrayList<>();
-    private Button btnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retrofit);
         lvUser = findViewById(R.id.lv_user);
-        btnRefresh = findViewById(R.id.btn_refresh);
-        btnRefresh.setVisibility(View.INVISIBLE);
+
+        //Method GET
         getUserFromAPI();
 
-        setTitle("Retrofit");
+        setTitle(getString(R.string.retrofit));
     }
 
     @Override
@@ -66,8 +67,9 @@ public class RetrofitActivity extends AppCompatActivity {
                 Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_add:
-
-                //startActivity(new Intent(this, ));
+                Intent intent = new Intent(this, AddUserActivity.class);
+                intent.putExtra(GlobalVariable.TYPE_CONN, GlobalVariable.RETROFIT);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -82,27 +84,52 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     private void getUserFromAPI() {
-        ApiService.endPoint().getUser()
-                .enqueue(new Callback<UserResponse>() {
-                    @Override
-                    public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-                        listUser = response.body().getUser_list();
-                        UserAdapter userAdapter = new UserAdapter(getApplicationContext(), listUser);
-                        lvUser.setAdapter(userAdapter);
-                        lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                Toast.makeText(getApplicationContext(), listUser.get(i).getUser_fullname(),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
+        ProgressDialog proDialog = new ProgressDialog(this);
+        proDialog.setTitle(getString(R.string.retrofit));
+        proDialog.setMessage("Silahkan tunggu");
+        proDialog.show();
 
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(GlobalVariable.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        MethodHTTP client = retrofit.create(MethodHTTP.class);
+        Call<UserResponse> call = client.getUser();
+
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                proDialog.dismiss();
+                listUser = response.body().getUser_list();
+                UserAdapter userAdapter = new UserAdapter(getApplicationContext(), listUser);
+                lvUser.setAdapter(userAdapter);
+                lvUser.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onFailure(Call<UserResponse> call, Throwable t) {
-                        Log.d(TAG, t.toString());
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        Toast.makeText(getApplicationContext(), listUser.get(i).getUser_fullname(),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+
+            @Override
+            public void onFailure(Call<UserResponse> call, Throwable t) {
+                Log.d(TAG, t.toString());
+            }
+        });
+    }
+
+
+
+    public void tambahanRetrofit(){
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
     }
 
 }
