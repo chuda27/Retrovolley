@@ -2,8 +2,6 @@ package com.choirulhuda.retrovolley.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,15 +60,15 @@ public class RetrofitActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_refresh:
-                getUserFromAPI();
-                Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.action_add:
                 Intent intent = new Intent(this, AddUserActivity.class);
                 intent.putExtra(GlobalVariable.TYPE_CONN, GlobalVariable.RETROFIT);
                 startActivity(intent);
                 break;
+            /*case R.id.action_refresh:
+                getUserFromAPI();
+                Toast.makeText(this, "Refresh", Toast.LENGTH_SHORT).show();
+                break;*/
         }
         return super.onOptionsItemSelected(item);
     }
@@ -123,9 +121,9 @@ public class RetrofitActivity extends AppCompatActivity {
 
 
     public void tambahanRetrofit(){
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
         Gson gson = new GsonBuilder()
                 .setLenient()

@@ -6,4 +6,8 @@
     <string name="retrofit">Retrofit</string>
     <string name="tambah_user">Tambah User</string>
     <string name="tidak_boleh_kosong">Tidak boleh kosong</string>
+    <string name="volley">Volley</string>
+    <string name="send_using_retrofit">Send using Retrofit</string>
+    <string name="send_using_volley">Send using Volley</string>
+    <string name="close">Close</string>
 </resources>
